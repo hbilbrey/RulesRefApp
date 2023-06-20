@@ -7,6 +7,7 @@ import {
   Text,
   useMediaQuery,
   IconButton,
+  VStack,
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import AccordionList from "./AccordionList";
@@ -17,23 +18,27 @@ function App() {
     fallback: false, // return false on the server, and re-evaluate on the client side
   });
 
+  const [isLaptop] = useMediaQuery("(max-width: 1024px)", {
+    ssr: true,
+    fallback: false, // return false on the server, and re-evaluate on the client side
+  });
+
   const { toggleColorMode, colorMode } = useColorMode();
 
   return (
     <>
-      <Box m={2}>
+      <VStack spacing={3} paddingX={isLaptop ? 10 : 40} m={2}>
         <Text fontSize={isMobileL ? "4xl" : "5xl"}>
           Naruto d20 Rules Reference
         </Text>
         <Text fontSize={"3xl"}>Status Conditions</Text>
 
-        <Input m={2} w={[300, 400, 800]} placeholder="Search" size="md" />
         {isMobileL ? (
           <AccordionList conditions={conditions} />
         ) : (
           <StatusBoxes />
         )}
-      </Box>
+      </VStack>
       <IconButton
         rounded="full"
         aria-label="change theme"

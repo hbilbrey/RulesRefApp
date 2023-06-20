@@ -1,6 +1,5 @@
 import { Divider, Link, List, ListItem } from "@chakra-ui/react";
-import React from "react";
-import { useState } from "react";
+import React, { useRef } from "react";
 
 interface conditionsObject {
   title: string;
@@ -10,12 +9,15 @@ interface conditionsObject {
 
 interface Props {
   conditions: conditionsObject[];
+  searchQuery: string;
   onSelectCondition: (condition: number) => void;
 }
 
-const ListComponent = ({ conditions, onSelectCondition }: Props) => {
-  const [conditionIndex, setConditionIndex] = useState(0);
-
+const ListComponent = ({
+  conditions,
+  searchQuery,
+  onSelectCondition,
+}: Props) => {
   return (
     <List
       h="calc(80vh)"
@@ -32,20 +34,23 @@ const ListComponent = ({ conditions, onSelectCondition }: Props) => {
       }}
       spacing={3}
     >
-      {conditions.map((condition, index) => (
-        <React.Fragment key={index}>
-          <ListItem key={index}>
-            <Link
-              fontSize="lg"
-              key={index}
-              onClick={() => onSelectCondition(index)}
-            >
-              {condition.title}
-            </Link>
-          </ListItem>
-          <Divider />
-        </React.Fragment>
-      ))}
+      {conditions.map((condition, index) =>
+        condition.title.toLowerCase().includes(searchQuery) ||
+        condition.description.toLowerCase().includes(searchQuery) ? (
+          <React.Fragment key={index}>
+            <ListItem key={index}>
+              <Link
+                fontSize="lg"
+                key={index}
+                onClick={() => onSelectCondition(index)}
+              >
+                {condition.title}
+              </Link>
+            </ListItem>
+            <Divider />
+          </React.Fragment>
+        ) : null
+      )}
     </List>
   );
 };
