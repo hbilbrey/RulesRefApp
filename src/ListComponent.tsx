@@ -20,7 +20,7 @@ const ListComponent = ({
 }: Props) => {
   return (
     <List
-      h="calc(80vh)"
+      h="calc(75vh)"
       overflow={"auto"}
       colorScheme="system"
       sx={{

@@ -1,7 +1,16 @@
-import { Box, HStack, Heading, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Heading,
+  Highlight,
+  Input,
+  Tag,
+  Text,
+} from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import conditions from "./data/conditions";
 import ListComponent from "./ListComponent";
+import React from "react";
 
 const StatusBoxes = () => {
   const [selectedCondition, changeSelectedCondition] = useState(0);
@@ -13,6 +22,36 @@ const StatusBoxes = () => {
 
   const updateSearchString = (search: string) => {
     changeSearchString(search);
+  };
+
+  const processStringMods = (input: string) => {
+    const regexNeg = /(-\d)/; // Matches "-4 word" pattern
+    const regexPos = /(\+\d)/; // Matches "+4 word" pattern
+    const regexAny = /((?:-|\+)\d+)/; // Matches either plus or minus
+    const parts = input.split(" ");
+
+    return (
+      <Text mt={4} fontSize="lg">
+        {parts.map((part, index) => {
+          if (regexNeg.test(part)) {
+            return (
+              <React.Fragment key={index}>
+                {" "}
+                <Tag backgroundColor={"rgba(255, 118, 118, 0.678)"}>{part}</Tag>
+              </React.Fragment>
+            );
+          } else if (regexPos.test(part)) {
+            return (
+              <React.Fragment key={index}>
+                {" "}
+                <Tag backgroundColor={"rgba(118, 255, 171, 0.596)"}>{part}</Tag>
+              </React.Fragment>
+            );
+          }
+          return <React.Fragment key={index}> {part}</React.Fragment>;
+        })}
+      </Text>
+    );
   };
 
   return (
@@ -32,9 +71,8 @@ const StatusBoxes = () => {
       </Box>
       <Box p={5} shadow="md" borderWidth="1px" w="50%">
         <Heading fontSize="2xl">{conditions[selectedCondition].title}</Heading>
-        <Text mt={4} fontSize="lg">
-          {conditions[selectedCondition].description}
-        </Text>
+
+        {processStringMods(conditions[selectedCondition].description)}
       </Box>
     </HStack>
   );
