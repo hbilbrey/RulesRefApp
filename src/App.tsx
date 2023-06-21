@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import AccordionList from "./AccordionList";
+import FilterMenuComponent from "./FilterMenuComponent";
 
 function App() {
   const [isMobileL] = useMediaQuery("(max-width: 600px)", {
@@ -32,6 +33,8 @@ function App() {
           Naruto d20 Rules Reference
         </Text>
         <Text fontSize={"3xl"}>Status Conditions</Text>
+
+        <FilterMenuComponent />
 
         {isMobileL ? (
           <AccordionList conditions={conditions} />

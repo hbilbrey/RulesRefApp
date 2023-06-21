@@ -1,5 +1,5 @@
 import { Divider, Link, List, ListItem } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React from "react";
 
 interface conditionsObject {
   title: string;
