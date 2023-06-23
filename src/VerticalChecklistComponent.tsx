@@ -23,7 +23,7 @@ const VerticalChecklistComponent = ({
     <VStack>
       <Text>{title}</Text>
       <Divider />
-      <CheckboxGroup colorScheme="gray">
+      <CheckboxGroup colorScheme="gray" defaultValue={selectedCheckboxes}>
         <VStack spacing={[1, 5]} direction={["column", "row"]} align="left">
           {contents.map((item, index) => (
             <Checkbox
