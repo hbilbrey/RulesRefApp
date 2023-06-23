@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Flex,
   HStack,
   Modal,
   ModalBody,
@@ -9,8 +10,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
+  Tag,
   Text,
+  Wrap,
+  useDisclosure,
 } from "@chakra-ui/react";
 import filterParams from "./data/filterParams";
 import React, { useState } from "react";
@@ -43,6 +46,12 @@ const FilterMenuComponent = ({ onCloseModal }: Props) => {
     onClose();
   };
 
+  const clickTag = (tagName: string) => {
+    const updatedBoxes = masterCheckboxes.filter((item) => item !== tagName);
+    setMasterCheckboxes(updatedBoxes);
+    setSelectedCheckboxes(updatedBoxes);
+  };
+
   return (
     <>
       <Button
@@ -53,6 +62,25 @@ const FilterMenuComponent = ({ onCloseModal }: Props) => {
       >
         Advanced Filter
       </Button>
+
+      {masterCheckboxes.length > 0 ? (
+        <>
+          <Divider />
+          <HStack>
+            <Text width="30vh" fontSize="xl">
+              Filtering by:
+            </Text>
+            <Wrap>
+              {masterCheckboxes.map((item) => (
+                <Tag key={item} onClick={(e) => clickTag(item)}>
+                  {item}
+                </Tag>
+              ))}
+            </Wrap>
+          </HStack>
+          <Divider />
+        </>
+      ) : null}
 
       <Modal
         isOpen={isOpen}
@@ -87,8 +115,6 @@ const FilterMenuComponent = ({ onCloseModal }: Props) => {
             <Button variant="ghost" onClick={closeModalCancel}>
               Cancel
             </Button>
-            <Text>Selected: {selectedCheckboxes}</Text>
-            <Text>Master: {masterCheckboxes}</Text>
           </ModalFooter>
         </ModalContent>
       </Modal>
