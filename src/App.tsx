@@ -12,6 +12,7 @@ import {
 import { FaMoon, FaSun } from "react-icons/fa";
 import AccordionList from "./AccordionList";
 import FilterMenuComponent from "./FilterMenuComponent";
+import { useState } from "react";
 
 function App() {
   const [isMobileL] = useMediaQuery("(max-width: 600px)", {
@@ -26,6 +27,12 @@ function App() {
 
   const { toggleColorMode, colorMode } = useColorMode();
 
+  const [filters, setFilters] = useState<string[]>([]);
+
+  const updateFilters = (newFilters: string[]) => {
+    setFilters([...filters].concat(newFilters));
+  };
+
   return (
     <>
       <VStack spacing={3} paddingX={isLaptop ? 10 : 40} m={2}>
@@ -34,7 +41,7 @@ function App() {
         </Text>
         <Text fontSize={"3xl"}>Status Conditions</Text>
 
-        <FilterMenuComponent />
+        <FilterMenuComponent onCloseModal={updateFilters} />
 
         {isMobileL ? (
           <AccordionList conditions={conditions} />

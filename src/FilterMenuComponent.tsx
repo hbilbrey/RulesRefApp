@@ -1,8 +1,7 @@
 import {
   Button,
+  Divider,
   HStack,
-  VStack,
-  Text,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,28 +10,31 @@ import {
   ModalHeader,
   ModalOverlay,
   useDisclosure,
-  Divider,
-  Checkbox,
-  CheckboxGroup,
+  Text,
 } from "@chakra-ui/react";
 import filterParams from "./data/filterParams";
-import React from "react";
+import React, { useState } from "react";
 import VerticalChecklistComponent from "./VerticalChecklistComponent";
 
-// We want to adv filter by...
-// Type
-// Rank
-// Time
-// Components
-// Area (Y/N)
-// Duration
-// Save (type)
+interface Props {
+  onCloseModal: (filters: string[]) => void;
+}
 
-const FilterMenuComponent = () => {
+const FilterMenuComponent = ({ onCloseModal }: Props) => {
   const OverlayOne = () => <ModalOverlay backdropFilter="blur(3px)" />;
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = React.useState(<OverlayOne />);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
+
+  const updateSelectedCheckboxes = (newSelections: string[]) => {
+    setSelectedCheckboxes(newSelections);
+  };
+
+  const closeModal = () => {
+    onClose();
+  };
 
   return (
     <>
@@ -50,31 +52,35 @@ const FilterMenuComponent = () => {
         onClose={onClose}
         isCentered
         motionPreset="slideInBottom"
-        size="xl"
       >
         {overlay}
-        <ModalContent>
+        <ModalContent minWidth="fit-content" height="fit-content">
           <ModalHeader>Filter by:</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <HStack align="top" spacing={3}>
+            <HStack align="top" spacing={3} padding={2}>
               {filterParams.map((item, index) => (
                 <VerticalChecklistComponent
                   key={index}
                   title={item.title}
                   contents={item.contents}
+                  selectedCheckboxes={selectedCheckboxes}
+                  onBoxCheck={updateSelectedCheckboxes}
                 />
               ))}
             </HStack>
+            <Divider />
+            <HStack align="top" spacing={3} padding={2}></HStack>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="gray" mr={3} onClick={onClose}>
+            <Button colorScheme="gray" mr={3} onClick={closeModal}>
               Save
             </Button>
             <Button variant="ghost" onClick={onClose}>
               Cancel
             </Button>
+            <Text>{selectedCheckboxes}</Text>
           </ModalFooter>
         </ModalContent>
       </Modal>

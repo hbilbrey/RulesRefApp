@@ -1,12 +1,4 @@
-import {
-  Box,
-  HStack,
-  Heading,
-  Highlight,
-  Input,
-  Tag,
-  Text,
-} from "@chakra-ui/react";
+import { Box, HStack, Heading, Input, Tag, Text } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import conditions from "./data/conditions";
 import ListComponent from "./ListComponent";
