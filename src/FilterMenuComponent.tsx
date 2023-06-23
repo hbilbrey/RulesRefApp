@@ -27,12 +27,19 @@ const FilterMenuComponent = ({ onCloseModal }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
+  const [masterCheckboxes, setMasterCheckboxes] = useState<string[]>([]);
 
   const updateSelectedCheckboxes = (newSelections: string[]) => {
     setSelectedCheckboxes(newSelections);
   };
 
-  const closeModal = () => {
+  const closeModalSave = () => {
+    setMasterCheckboxes(selectedCheckboxes);
+    onClose();
+  };
+
+  const closeModalCancel = () => {
+    setSelectedCheckboxes(masterCheckboxes);
     onClose();
   };
 
@@ -74,13 +81,14 @@ const FilterMenuComponent = ({ onCloseModal }: Props) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="gray" mr={3} onClick={closeModal}>
+            <Button colorScheme="gray" mr={3} onClick={closeModalSave}>
               Save
             </Button>
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="ghost" onClick={closeModalCancel}>
               Cancel
             </Button>
-            <Text>{selectedCheckboxes}</Text>
+            <Text>Selected: {selectedCheckboxes}</Text>
+            <Text>Master: {masterCheckboxes}</Text>
           </ModalFooter>
         </ModalContent>
       </Modal>
