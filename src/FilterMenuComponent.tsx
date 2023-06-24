@@ -72,7 +72,16 @@ const FilterMenuComponent = ({ onCloseModal }: Props) => {
             </Text>
             <Wrap>
               {masterCheckboxes.map((item) => (
-                <Tag key={item} onClick={(e) => clickTag(item)}>
+                <Tag
+                  key={item}
+                  onClick={() => clickTag(item)}
+                  _hover={{
+                    textDecorationLine: "line-through",
+                    textDecorationThickness: "2px",
+                    textDecorationColor: "tomato",
+                    cursor: "pointer",
+                  }}
+                >
                   {item}
                 </Tag>
               ))}

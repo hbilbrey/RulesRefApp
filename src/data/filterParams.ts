@@ -4,8 +4,8 @@ export default [
         "contents": ["Ninjutsu", "Taijutsu", "Genjutsu", "Fuinjutsu", "Hijutsu", "Kinjutsu", "Training"]
     }, 
     {
-        "title": "Affinity",
-        "contents": ["Water", "Wind", "Earth", "Fire", "Lightning"]
+        "title": "Subtype",
+        "contents": ["Water", "Wind", "Earth", "Fire", "Lightning", "Ice", "Medical", "Sonic"]
     }, 
     {
         "title": "Components",
